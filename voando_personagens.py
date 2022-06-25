@@ -1,13 +1,26 @@
-from ast import Import
 import pygame, random, os
 
 os.system("cls")
 
-# nome = input("Informe seu nome: ")
-# email = input("Informe seu email: ")
+from Funcoes.funcoes_gerais import armazenar, verificaInf
 
-from Funcoes.funcoes_telas import morreu
-from Funcoes.funcoes_telas import telaMenu, telaLoja, telaComoJogar
+nomeJogador = verificaInf("Informe seu nome:")
+
+while True:
+    email = verificaInf("Informe seu email: ")
+    if "@" not in email or ".com" not in email:
+        print("Escreva corretamente seu email")
+
+    elif email.index(".com") !=len(email)-4 or email.index("@") == 1:
+        print("Email inválido")
+
+    else:
+        break
+
+armazenar(nomeJogador, "Registro de acessos.txt")
+armazenar(email, "Registro de acessos.txt")
+
+from Funcoes.funcoes_telas import escreveTela, telaMenu, telaLoja, telaComoJogar, morreu
 
 pygame.init()
 
@@ -19,22 +32,21 @@ pygame_display = pygame.display
 pygame_display.set_caption("Voando com personagens")
 
 gameDisplay = pygame.display.set_mode(tamanho) #Tamanho da tela
-iconeOminitrix = pygame.image.load("Imagens/icone_omnitrix.png")
+iconeOminitrix = pygame.image.load("Imagens/icone_assas.png")
 pygame_display.set_icon(iconeOminitrix)
 
 clock = pygame.time.Clock() #Armazena em uma variável o metodo de renderizar a tela
 
 corLetra = (255, 255, 255)
-fundo = pygame.image.load("Imagens/fundo.png")
 
 pontos = 0
 
-personagem = "Imagens/insectoide"
+personagem = "insectoide"
 
 def jogo(nomePersonagem):
-    fundo = pygame.image.load("%s cidade.jpg"%nomePersonagem)
+    fundo = pygame.image.load("Imagens/Cenarios/%s cidade.jpg"%nomePersonagem)
 
-    jogador = pygame.image.load(nomePersonagem + ".png")
+    jogador = pygame.image.load("Imagens/Personagens/"+ nomePersonagem + ".png")
     jogadorPosX = 400
     jogadorPosY = 400
     movimentoXPersonagem = 0
@@ -43,7 +55,7 @@ def jogo(nomePersonagem):
     jogadorLargura =  100
     jogadorAltura = 136
 
-    missil = pygame.image.load("Imagens/missil.png")
+    missil = pygame.image.load("Imagens/Laiser.png")
     missilPosX = 0
     missilPosY = 0
     movimentoXMissil = -5
@@ -58,9 +70,8 @@ def jogo(nomePersonagem):
     movimentoXRobo = 5
 
     missilLiberado = False
-    viraMissil = False
-    velocidadeIncremento = 1
-
+    velocidadeIncrementoRobo = 1
+    velocidadeIncrementoMissil = -8
     pontosJogo = 0
 
     pygame.mixer.music.load("Sons/Ben 10 abertura.mp3")
@@ -81,19 +92,15 @@ def jogo(nomePersonagem):
                     if virou == True:
                         jogador = pygame.transform.flip(jogador, True, False)
                         virou = False
-                    if missilLiberado == False:
-                        viraMissil = False
-                        movimentoXMissil = -5
                     movimentoXPersonagem = - velocidade
+                    velocidadeIncrementoMissil = -8
 
                 elif event.key == pygame.K_RIGHT:
                     if virou == False:
                         jogador = pygame.transform.flip(jogador, True, False)
                         virou = True
-                    if missilLiberado == False:
-                        viraMissil = True
-                        movimentoXMissil = 5
                     movimentoXPersonagem = velocidade
+                    velocidadeIncrementoMissil = 8
                 
                 elif event.key == pygame.K_UP:
                     movimentoYPersonagem = -velocidade
@@ -105,6 +112,7 @@ def jogo(nomePersonagem):
                     missilLiberado = True
                     missilPosX = jogadorPosX
                     missilPosY = jogadorPosY
+                    movimentoXMissil = velocidadeIncrementoMissil
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT or event.key == pygame.K_UP or event.key == pygame.K_DOWN:
@@ -137,11 +145,7 @@ def jogo(nomePersonagem):
         pixelsXMissel = list(range(missilPosX, missilPosX + missilLargura + 1))
         pixelsYMissel = list(range(missilPosY, missilPosY + missilAltura + 1))
 
-        if len(list(set(pixelsYRobo) & set(pixelsYjogador))) > 60:
-            if len(list(set(pixelsXRobo) & set(pixelsXjogador))) > 65:
-                print(len(list(set(pixelsXRobo) & set(pixelsXjogador))))
-                print(len(list(set(pixelsYRobo) & set(pixelsYjogador))))
-                print("Morreu")
+        if len(list(set(pixelsYRobo) & set(pixelsYjogador))) > 60 and len(list(set(pixelsXRobo) & set(pixelsXjogador))) > 65:
                 return ["Morreu", pontosJogo]
         
         if roboPosX > largura_tela or roboPosX < 0 - roboLargura:
@@ -157,20 +161,20 @@ def jogo(nomePersonagem):
                 pontosJogo = pontosJogo + 1
                 roboPosY = random.randrange(0, altura_tela - roboAltura)
                 numeroAleatorio = random.randrange(1, 3)
-                movimentoXRobo = movimentoXRobo + velocidadeIncremento
+                movimentoXRobo = movimentoXRobo + velocidadeIncrementoRobo
+
                 if numeroAleatorio == 1:
                     roboPosX = 0 - roboLargura
                     if movimentoXRobo < 0:
-                        movimentoXRobo = -(movimentoXRobo - velocidadeIncremento)
+                        movimentoXRobo = -(movimentoXRobo - velocidadeIncrementoRobo)
                     else:
-                        movimentoXRobo = movimentoXRobo + velocidadeIncremento
+                        movimentoXRobo = movimentoXRobo + velocidadeIncrementoRobo
                 else:
                     roboPosX = largura_tela
                     if movimentoXRobo > 0:
-                        movimentoXRobo = -(movimentoXRobo + velocidadeIncremento)
+                        movimentoXRobo = -(movimentoXRobo + velocidadeIncrementoRobo)
                     else:
-                        movimentoXRobo = movimentoXRobo - velocidadeIncremento
-                print(movimentoXRobo)
+                        movimentoXRobo = movimentoXRobo - velocidadeIncrementoRobo
 
         roboPosX = roboPosX + movimentoXRobo
 
@@ -180,16 +184,10 @@ def jogo(nomePersonagem):
         gameDisplay.blit(jogador, (jogadorPosX, jogadorPosY))
 
         # Escrevendo na tela
-        fonte = pygame.font.Font("freesansbold.ttf", 20)
-        texto = fonte.render("PontosJogo: " + str(pontosJogo),True, corLetra)
-        gameDisplay.blit(texto, (20, 20))
+        gameDisplay.blit(escreveTela("Pontos: %d"%pontosJogo, corLetra, 20), (20, 20))
 
         if missilLiberado == True and missilPosX > 0 and missilPosX + missilLargura < largura_tela:
             gameDisplay.blit(missil, (missilPosX, missilPosY))
-
-            if viraMissil == True:
-                missil = pygame.transform.flip(missil, True, False)
-                viraMissil = False
             
             missilPosX += movimentoXMissil
         else:

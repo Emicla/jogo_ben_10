@@ -71,7 +71,6 @@ def telaMenu(pontos):
         gameDisplay.fill((65, 81, 106))
         
         gameDisplay.blit(escreveTela("Pontos: %d"%int(pontos), (255, 255, 255), 25), (100, 100))
-        corBorda = (255, 255, 255)
 
         pygame.draw.rect(gameDisplay, (0, 0, 0), pygame.Rect(300, 170, 500, 90))
         pygame.draw.rect(gameDisplay, (0, 0, 0), pygame.Rect(300, 290, 500, 90))
@@ -91,8 +90,8 @@ def telaLoja(dinheiro):
 
     selecionado = 1
     corBorda = (0, 228, 251)
-    cadiado = "Imagens/cadiado"
-    nomesPersonagens = ["Imagens/insectoide","Imagens/angry birds", "Imagens/Lanterna Verde", "Imagens/super choque", "Imagens/homem de ferro"]
+    cadiado = "cadiado"
+    nomesPersonagens = ["insectoide","angry birds", "Lanterna Verde", "super choque", "homem de ferro"]
     posicoes = [200, 350, 500, 650, 800]
     liberados = 1
     personagensLiberados = []
@@ -102,7 +101,7 @@ def telaLoja(dinheiro):
         if liberados >= len(nomesPersonagens):
             break
         else:
-            minimo += 5
+            minimo += 10
             liberados += 1
         os.system("cls")
         print(minimo)
@@ -142,15 +141,11 @@ def telaLoja(dinheiro):
         gameDisplay.fill((65, 81, 106))
 
         for posicao, personagem in enumerate(personagensLiberados):
-            imagemPersonagem = pygame.image.load(personagem + ".png")
+            imagemPersonagem = pygame.image.load("Imagens/Personagens/" + personagem + ".png")
             gameDisplay.blit(imagemPersonagem, (posicoes[posicao], 200))
 
-        # pygame.draw.rect(gameDisplay, (0, 0, 0), pygame.Rect(216, 200, 500, 90))
-        # pygame.draw.rect(gameDisplay, (0, 0, 0), pygame.Rect(216, 200, 500, 90))
+        gameDisplay.blit(escreveTela("Use as setas e clique Enter para selecionar", (255, 255, 255), 30), (25, 120))
         pygame.draw.rect(gameDisplay, corBorda, pygame.Rect(posicoes[selecionado - 1] - 13, 200-3, 125, 143), 2)
-
-        # gameDisplay.blit(escreveTela(opcao1, corOp1, 50), (375, 215))
-        # gameDisplay.blit(escreveTela(opcao2, corOp2, 50), (375, 343))
 
         pygame_display.update()
         clock.tick(60)
@@ -168,7 +163,7 @@ def telaComoJogar():
 
         gameDisplay.fill((65, 81, 106))
         gameDisplay.blit(escreveTela("- Use as setas do teclado para movimentar o personagem", (255, 255, 255), 30), (25, 150))
-        gameDisplay.blit(escreveTela("- Precione [A] para lançar poder para destruir a nave", (255, 255, 255), 30), (25, 255))
+        gameDisplay.blit(escreveTela("- Precione [A] para lançar poder e destruir a nave", (255, 255, 255), 30), (25, 255))
         gameDisplay.blit(escreveTela("- Destrua o máximo de robos para ganhar pontos e liberar personagens", (255, 255, 255), 30), (25, 350))
         gameDisplay.blit(escreveTela("Precione [X] para Sair", (0,0,0), 30), (30, 500))
         pygame_display.update()
@@ -179,7 +174,6 @@ def morreu(pontos):
     omnitrixDescarregando = pygame.mixer.Sound("Sons/Omnitrix Descarregando.mp3")
     omnitrixDescarregando.set_volume(0.1)
     corPreta = (0, 0, 0)
-    corVermelha = (255, 0, 0)
     pygame.mixer.music.stop()
     pygame.mixer.Sound.play(omnitrixDescarregando)
 

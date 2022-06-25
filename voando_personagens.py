@@ -7,7 +7,7 @@ os.system("cls")
 # email = input("Informe seu email: ")
 
 from Funcoes.funcoes_telas import morreu
-from Funcoes.funcoes_telas import telaMenu, telaLoja
+from Funcoes.funcoes_telas import telaMenu, telaLoja, telaComoJogar
 
 pygame.init()
 
@@ -29,12 +29,12 @@ fundo = pygame.image.load("Imagens/fundo.png")
 
 pontos = 0
 
-personagem = "Imagens/insectoide.png"
+personagem = "Imagens/insectoide"
 
 def jogo(nomePersonagem):
-    fundo = pygame.image.load("Imagens/%s cidade.png"%nomePersonagem)
+    fundo = pygame.image.load("%s cidade.jpg"%nomePersonagem)
 
-    jogador = pygame.image.load(nomePersonagem)
+    jogador = pygame.image.load(nomePersonagem + ".png")
     jogadorPosX = 400
     jogadorPosY = 400
     movimentoXPersonagem = 0
@@ -70,6 +70,7 @@ def jogo(nomePersonagem):
     virou = False
 
     while True:
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -174,7 +175,7 @@ def jogo(nomePersonagem):
         roboPosX = roboPosX + movimentoXRobo
 
         # Desenhando na tela as imagens
-        gameDisplay.fill((195, 100, 30)) #Mudando a cor do fundo
+        gameDisplay.blit(fundo, (0, 0))
         gameDisplay.blit(robo, (roboPosX, roboPosY))
         gameDisplay.blit(jogador, (jogadorPosX, jogadorPosY))
 
@@ -212,6 +213,9 @@ while True:
         lista = telaLoja(pontos)
         telaAtual = lista[0]
         personagem = lista[1]
+    
+    elif telaAtual == "Como jogar":
+        telaAtual = telaComoJogar()
 
     elif telaAtual == "Morreu":
         telaAtual = morreu(pontos)

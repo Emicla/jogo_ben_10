@@ -74,7 +74,7 @@ def jogo(nomePersonagem):
     velocidadeIncrementoMissil = -8
     pontosJogo = 0
 
-    pygame.mixer.music.load("Sons/Ben 10 abertura.mp3")
+    pygame.mixer.music.load("Sons/" + nomePersonagem + ".mp3")
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.1)
 

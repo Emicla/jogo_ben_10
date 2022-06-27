@@ -31,11 +31,11 @@ tamanho = (largura_tela, altura_tela)
 pygame_display = pygame.display
 pygame_display.set_caption("Voando com personagens")
 
-gameDisplay = pygame.display.set_mode(tamanho) #Tamanho da tela
+gameDisplay = pygame.display.set_mode(tamanho)
 incone = pygame.image.load("Imagens/controle.ico")
 pygame_display.set_icon(incone)
 
-clock = pygame.time.Clock() #Armazena em uma variável o metodo de renderizar a tela
+clock = pygame.time.Clock()
 
 corLetra = (255, 255, 255)
 

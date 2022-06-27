@@ -1,8 +1,8 @@
-# Jogo herÃ³is voadores
- - EmiclÃ£ Lenon da Rosa
+# Jogo heróis voadores
+ - Emiclã Lenon da Rosa
  - RA: 1129842
-## DescriÃ§Ã£o
-Essa Ã© uma atividade da faculdade para a criaÃ§Ã£o de um jogo 2d em pygame e nele vocÃª terÃ¡ que disviar e destrir uma nave para conseguir ganhar pontos e liberar outras skins, e mostre atÃ© onde vocÃª consegue chegar.
+## Descrição
+Essa é uma atividade da faculdade para a criação de um jogo 2d em pygame e nele você terá que disviar e destrir uma nave para conseguir ganhar pontos e liberar outras skins, e mostre então até onde você consegue chegar.
 ## Comandos:
  - Setas: Controlam o personagem
  - Tecla A: Atira um raio

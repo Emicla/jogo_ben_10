@@ -5,8 +5,8 @@ executables = [cx_Freeze.Executable(
 
 cx_Freeze.setup(
     name="Fly Heroes",
-    options={"build_exe": {"packages": ["pygame", "os", "random"],
-                           "include_files": ["Imagens", "Funcoes"]
+    options={"build_exe": {"packages": ["pygame"],
+                           "include_files": ["Imagens", "Funcoes", "Sons"]
                            }},
     executables = executables
 )
